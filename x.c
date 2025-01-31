@@ -2034,6 +2034,9 @@ main(int argc, char *argv[])
 	xw.isfixed = False;
 	xsetcursor(cursorshape);
 
+	char *bg = getenv("COLONQ_BGCOLOR");
+	if (bg) colorname[defaultbg] = bg;
+
 	ARGBEGIN {
 	case 'a':
 		allowaltscreen = 0;
@@ -2083,7 +2086,7 @@ run:
 		opt_cmd = argv;
 
 	if (!opt_title)
-		opt_title = (opt_line || !opt_cmd) ? "st" : opt_cmd[0];
+		opt_title = (opt_line || !opt_cmd) ? "Colonq's Face" : opt_cmd[0];
 
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");

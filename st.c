@@ -2182,12 +2182,12 @@ tcontrolcode(uchar ascii)
 		tnewline(IS_SET(MODE_CRLF));
 		return;
 	case '\a':   /* BEL */
-		if (term.esc & ESC_STR_END) {
-			/* backwards compatibility to xterm */
-			strhandle();
-		} else {
-			xbell();
-		}
+		// if (term.esc & ESC_STR_END) {
+		// 	/* backwards compatibility to xterm */
+		// 	strhandle();
+		// } else {
+		// 	xbell();
+		// }
 		break;
 	case '\033': /* ESC */
 		csireset();
@@ -2199,10 +2199,10 @@ tcontrolcode(uchar ascii)
 		term.charset = 1 - (ascii - '\016');
 		return;
 	case '\032': /* SUB */
-		tsetchar('?', &term.c.attr, term.c.x, term.c.y);
+		// tsetchar('?', &term.c.attr, term.c.x, term.c.y);
 		/* FALLTHROUGH */
 	case '\030': /* CAN */
-		csireset();
+		// csireset();
 		break;
 	case '\005': /* ENQ (IGNORED) */
 	case '\000': /* NUL (IGNORED) */
@@ -2243,7 +2243,7 @@ tcontrolcode(uchar ascii)
 	case 0x99:   /* TODO: SGCI */
 		break;
 	case 0x9a:   /* DECID -- Identify Terminal */
-		ttywrite(vtiden, strlen(vtiden), 0);
+		// ttywrite(vtiden, strlen(vtiden), 0);
 		break;
 	case 0x9b:   /* TODO: CSI */
 	case 0x9c:   /* TODO: ST */
@@ -2252,7 +2252,7 @@ tcontrolcode(uchar ascii)
 	case 0x9d:   /* OSC -- Operating System Command */
 	case 0x9e:   /* PM -- Privacy Message */
 	case 0x9f:   /* APC -- Application Program Command */
-		tstrsequence(ascii);
+		// tstrsequence(ascii);
 		return;
 	}
 	/* only CAN, SUB, \a and C1 chars interrupt a sequence */
@@ -2281,7 +2281,7 @@ eschandle(uchar ascii)
 	case '^': /* PM -- Privacy Message */
 	case ']': /* OSC -- Operating System Command */
 	case 'k': /* old title set compatibility */
-		tstrsequence(ascii);
+		// tstrsequence(ascii);
 		return 0;
 	case 'n': /* LS2 -- Locking shift 2 */
 	case 'o': /* LS3 -- Locking shift 3 */
@@ -2308,35 +2308,35 @@ eschandle(uchar ascii)
 		term.tabs[term.c.x] = 1;
 		break;
 	case 'M': /* RI -- Reverse index */
-		if (term.c.y == term.top) {
-			tscrolldown(term.top, 1);
-		} else {
-			tmoveto(term.c.x, term.c.y-1);
-		}
+		// if (term.c.y == term.top) {
+		// 	tscrolldown(term.top, 1);
+		// } else {
+		// 	tmoveto(term.c.x, term.c.y-1);
+		// }
 		break;
 	case 'Z': /* DECID -- Identify Terminal */
-		ttywrite(vtiden, strlen(vtiden), 0);
+		// ttywrite(vtiden, strlen(vtiden), 0);
 		break;
 	case 'c': /* RIS -- Reset to initial state */
-		treset();
-		resettitle();
-		xloadcols();
+		// treset();
+		// resettitle();
+		// xloadcols();
 		break;
 	case '=': /* DECPAM -- Application keypad */
-		xsetmode(1, MODE_APPKEYPAD);
+		// xsetmode(1, MODE_APPKEYPAD);
 		break;
 	case '>': /* DECPNM -- Normal keypad */
-		xsetmode(0, MODE_APPKEYPAD);
+		// xsetmode(0, MODE_APPKEYPAD);
 		break;
 	case '7': /* DECSC -- Save Cursor */
-		tcursor(CURSOR_SAVE);
+		// tcursor(CURSOR_SAVE);
 		break;
 	case '8': /* DECRC -- Restore Cursor */
-		tcursor(CURSOR_LOAD);
+		// tcursor(CURSOR_LOAD);
 		break;
 	case '\\': /* ST -- String Terminator */
-		if (term.esc & ESC_STR_END)
-			strhandle();
+		// if (term.esc & ESC_STR_END)
+		// 	strhandle();
 		break;
 	default:
 		fprintf(stderr, "erresc: unknown sequence ESC 0x%02X '%c'\n",
